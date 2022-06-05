@@ -1,10 +1,16 @@
 <script>
 	import { onMount } from 'svelte';
 	import WeatherService from './weatherService';
+	import avatarDecoder from './avatarDecoder';
+	import * as avatarList from '../public/assets/avatar/list.json';
+
 	const weatherService = new WeatherService("Hou");
 
 	const updateIntervalMinutes = 1;
 	let airTemperature, waterTemperature, weatherState, windSpeed;
+	waterTemperature = 11;
+	weatherState = "something else";
+
 
 	function updateWeather() {
 		airTemperature = weatherService.getAirTemperature();
@@ -13,8 +19,13 @@
 		windSpeed = weatherService.getWindSpeed();
 	}
 
+	function getPossibleAvatars() {
+		return avatarDecoder(avatarList, { airTemperature, waterTemperature,weatherState, windSpeed })
+	}
+
 	onMount(() => {
 		setInterval(updateWeather(), updateIntervalMinutes*1000*60)
+		console.log(getPossibleAvatars());
 	})
 
 </script>
