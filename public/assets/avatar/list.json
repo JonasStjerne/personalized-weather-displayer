@@ -1,24 +1,21 @@
 [
       {
          "src":"min0, max10",
-         "conditions":[
-            {
+         "conditions": {
                "waterTemperature":{
-                  "min":0,
-                  "max":10
+                  "min":1,
+                  "max":16
                }
             }
-         ]
       },
       {
          "src":"max10andRainy",
-         "conditions":[
-            {
+         "conditions":{
                "waterTemperature":{
-                  "max":10
+                  "min":15,
+                  "max":16
                },
-               "weatherState":"rainy"
+               "weatherState":"rainy" 
             }
-         ]
       }
    ]

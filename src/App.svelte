@@ -8,8 +8,6 @@
 
 	const updateIntervalMinutes = 1;
 	let airTemperature, waterTemperature, weatherState, windSpeed;
-	waterTemperature = 11;
-	weatherState = "something else";
 
 
 	function updateWeather() {

@@ -5,20 +5,23 @@ export default function avatarDecoder(avatarList, weatherData) {
       //const avatarList = JSON.parse(avatarListJson);
 
       //Check if weather satisfy each avatars conditions
-      console.log(avatarList.default)
+
       //For each avatar
       avatarList.default.forEach((avatar, i) => {
-            const conditionsMet = true;
+            let conditionsMet = true;
             //Check if all its conditions are met
-            avatar.conditions.forEach(condition => {
+            Object.keys(avatar.conditions).forEach(key => {
+                  const condition = avatar.conditions[key];
                   //If object it will have a min of max val
-                  if(Object(condition)) {
-                        if(condition.min !== null && condition.min > weatherData[Object.keys( {condition} )[0]] ) {
+                  if(typeof condition === 'object') {
+                        console.log("Max: " + condition.max)
+                        console.log("Actual weather: " + weatherData[key])
+                        if(condition.min !== null && condition.min > weatherData[key] ) {
                               conditionsMet = false;
                               console.log("checked min")
                               return;
                         }
-                        else if(condition.max !== null && condition.max < weatherData[Object.keys( {condition} )[0]] ) {
+                        else if(condition.max !== null && condition.max < weatherData[key] ) {
                               conditionsMet = false;
                               console.log("checked max")
 
@@ -26,7 +29,11 @@ export default function avatarDecoder(avatarList, weatherData) {
                         }
                   //Else it will be a string
                   } else {
-                        if (condition !== weatherData[Object.keys( {condition} )[0]] ) {
+                        console.log("not object")
+                        if (condition != weatherData[key] ) {
+                              console.log("string not equal")
+                              console.log(weatherState)
+                              console.log(condition)
                               conditionsMet = false;
                               return
                         }
