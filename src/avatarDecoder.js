@@ -14,26 +14,17 @@ export default function avatarDecoder(avatarList, weatherData) {
                   const condition = avatar.conditions[key];
                   //If object it will have a min of max val
                   if(typeof condition === 'object') {
-                        console.log("Max: " + condition.max)
-                        console.log("Actual weather: " + weatherData[key])
                         if(condition.min !== null && condition.min > weatherData[key] ) {
                               conditionsMet = false;
-                              console.log("checked min")
                               return;
                         }
                         else if(condition.max !== null && condition.max < weatherData[key] ) {
                               conditionsMet = false;
-                              console.log("checked max")
-
                               return;
                         }
                   //Else it will be a string
                   } else {
-                        console.log("not object")
                         if (condition != weatherData[key] ) {
-                              console.log("string not equal")
-                              console.log(weatherState)
-                              console.log(condition)
                               conditionsMet = false;
                               return
                         }
