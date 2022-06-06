@@ -13,6 +13,7 @@ export default function avatarDecoder(avatarList, weatherData) {
             Object.keys(avatar.conditions).forEach(key => {
                   const condition = avatar.conditions[key];
                   //If object it will have a min of max val
+                  if(!weatherData[key]) { console.error("Animation condition error: No condition called ", key); return}
                   if(typeof condition === 'object') {
                         if(condition.min !== null && condition.min > weatherData[key] ) {
                               conditionsMet = false;
