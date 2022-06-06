@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import WeatherService from './weatherService';
 	import getFilteredAnimations from './getAnimations';
-	import * as avatarList from '../public/assets/avatar/list.json';
+	import * as animations from '../public/assets/animations/list.json';
 
 	const weatherService = new WeatherService("Hou");
 
@@ -23,9 +23,10 @@
 	function runNewAnimation() {
 		//Save last animation
 		const previousAnimation = currentAnimation;
+		var pickedAnimation;
 		
 		//Get animations which conditions match weatherData
-		let animationContainer = getFilteredAnimations(avatarList, { airTemperature, waterTemperature,weatherState, windSpeed });
+		let animationContainer = getFilteredAnimations(animations, { airTemperature, waterTemperature,weatherState, windSpeed });
 
 		function pickRandomAnimation() {
 			//If no animations condition are met, play default animation
@@ -34,7 +35,7 @@
 				return;
 			}
 			//Select random animation from animationContainer
-			const pickedAnimation = animationContainer[Math.floor(animationContainer.length * Math.random()) | 0];
+			pickedAnimation = animationContainer[Math.floor(animationContainer.length * Math.random()) | 0];
 			//If its the same as last animation and there are others to pick, pick a new one
 			if(pickedAnimation == previousAnimation && animationContainer.length > 1) {
 				pickRandomAnimation()
@@ -48,10 +49,13 @@
 	}
 
 	onMount(() => {
+		//Get weather information and update every set amount of time
 		updateWeather()
 		setInterval(updateWeather, updateWeatherDataIntervalMinutes*60*1000)
 
-		setInterval(newAnimation, animationCycleTimeMinutes*60*1000)
+		//Set new animation and set a new one every set amount of time
+		runNewAnimation()
+		setInterval(runNewAnimation, animationCycleTimeMinutes*60*1000)
 	})
 
 </script>
@@ -61,20 +65,20 @@
 	</video>
 	<div class="weatherVideoContainer">
 		<video autoplay muted loop class="backgroundWeather">
-			<source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+			<source src={ `./assets/weather/${weatherState}.mp4`} type="video/mp4">
 		</video>
 		<div class="weatherInformationContainer">
 			<div class="airTemperature">
-				<h1>21°</h1>
+			<h1>{ airTemperature }°</h1>
 			</div>
 			<div class="secondaryWeatherInfo">
 				<div class="windSpeedContainer">
 					<img src="./assets/windIcon.png" alt="">
-					<h2>5m/s</h2>
+					<h2>{ windSpeed }m/s</h2>
 				</div>
 				<div class="waterTemperature">
 					<img src="./assets/waterIcon.png" alt="">
-					<h2>10°</h2>
+				<h2>{ waterTemperature }°</h2>
 				</div>
 			</div>
 		</div>

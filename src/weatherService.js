@@ -8,15 +8,15 @@ export default class WeatherService {
       }
 
       getWaterTemperature() {
-            return 14.2;
+            return 14;
       }
 
       getWeatherState() {
-            return "rainy";
+            return "partlyCloudy";
       }
 
       getWindSpeed() {
-            return 2.3;
+            return 2;
       }
 
 }
