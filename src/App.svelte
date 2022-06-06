@@ -1,13 +1,15 @@
 <script>
 	import { onMount } from 'svelte';
 	import WeatherService from './weatherService';
-	import avatarDecoder from './avatarDecoder';
+	import getFilteredAnimations from './getAnimations';
 	import * as avatarList from '../public/assets/avatar/list.json';
 
 	const weatherService = new WeatherService("Hou");
 
-	const updateIntervalMinutes = 1;
-	let airTemperature, waterTemperature, weatherState, windSpeed;
+	const updateWeatherDataIntervalMinutes = 0.1;
+	const animationCycleTimeMinutes = 5;
+	const defaultAnimation = 'defaultAnimation.mp4';
+	let airTemperature, waterTemperature, weatherState, windSpeed, currentAnimation;
 
 
 	function updateWeather() {
@@ -15,15 +17,41 @@
 		waterTemperature = weatherService.getWaterTemperature();
 		weatherState = weatherService.getWeatherState();
 		windSpeed = weatherService.getWindSpeed();
+		console.log("Updated weather data")
 	}
 
-	function getPossibleAvatars() {
-		return avatarDecoder(avatarList, { airTemperature, waterTemperature,weatherState, windSpeed })
+	function runNewAnimation() {
+		//Save last animation
+		const previousAnimation = currentAnimation;
+		
+		//Get animations which conditions match weatherData
+		let animationContainer = getFilteredAnimations(avatarList, { airTemperature, waterTemperature,weatherState, windSpeed });
+
+		function pickRandomAnimation() {
+			//If no animations condition are met, play default animation
+			if (animationContainer.length == 0) {
+				pickRandomAnimation = defaultAnimation;
+				return;
+			}
+			//Select random animation from animationContainer
+			const pickedAnimation = animationContainer[Math.floor(animationContainer.length * Math.random()) | 0];
+			//If its the same as last animation and there are others to pick, pick a new one
+			if(pickedAnimation == previousAnimation && animationContainer.length > 1) {
+				pickRandomAnimation()
+			}
+		}
+		//Call function
+		pickRandomAnimation();
+
+		//Set the new animation
+		currentAnimation = pickedAnimation;
 	}
 
 	onMount(() => {
-		setInterval(updateWeather(), updateIntervalMinutes*1000*60)
-		console.log(getPossibleAvatars());
+		updateWeather()
+		setInterval(updateWeather, updateWeatherDataIntervalMinutes*60*1000)
+
+		setInterval(newAnimation, animationCycleTimeMinutes*60*1000)
 	})
 
 </script>
