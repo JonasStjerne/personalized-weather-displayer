@@ -88,11 +88,12 @@
 
 </script>
 <div class="wrapper">
-	<video autoplay muted loop class="idiot">
+	<img src="{ `./assets/animations/${currentAnimation}` }" alt="" class="idiot">
+	<!-- <video autoplay muted loop class="idiot">
 		<source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
-	</video>
+	</video> -->
 	<div class="weatherVideoContainer">
-	<video autoplay muted loop class="backgroundWeather" style="filter: blur(4px) brightness({brightness})">
+		<video autoplay muted loop class="backgroundWeather" style="filter: blur(4px) brightness({brightness})">
 			<source src={ `./assets/weather/${weatherState}.mp4`} type="video/mp4">
 		</video>
 		<div class="weatherInformationContainer">
