@@ -51,13 +51,13 @@
 		const previousAnimation = currentAnimation;
 		var pickedAnimation;
 		
-		//Get animations which conditions match weatherData
+		//Get animations with conditions that match weatherData
 		let animationContainer = getFilteredAnimations(animations, { airTemperature, waterTemperature,weatherState, windSpeed });
 
 		function pickRandomAnimation() {
 			//If no animations condition are met, play default animation
 			if (animationContainer.length == 0) {
-				pickRandomAnimation = defaultAnimation;
+				pickedAnimation = defaultAnimation;
 				return;
 			}
 			//Select random animation from animationContainer
