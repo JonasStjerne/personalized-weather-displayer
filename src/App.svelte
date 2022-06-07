@@ -8,16 +8,42 @@
 
 	const updateWeatherDataIntervalMinutes = 0.1;
 	const animationCycleTimeMinutes = 5;
+
 	const defaultAnimation = 'defaultAnimation.mp4';
+
+	const latitude = 55.92028279;
+	const longitude = 10.24266992;
+	let brightness;
+
 	let airTemperature, waterTemperature, weatherState, windSpeed, currentAnimation;
 
+	//Set the brighness of the video according to daylight outside
+	//Thanks to https://sunrise-sunset.org/api for using the API
+	function setBrightnessToDaylight(lat, lng) {
+		fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today&formatted=0`)
+		.then(response => response.json())
+		.then(data => {
+			if(data.status == "OK") {
+				const sunrise = new Date(data.results.sunrise);
+				const sunset = new Date(data.results.sunset);
+				const currentTime = new Date();
 
+				if(currentTime.getHours() > sunrise.getHours()+1 && currentTime.getHours() < sunset.getHours()-1){
+					brightness = 1;
+				} else if (currentTime.getHours() == sunrise.getHours()+1 || currentTime.getHours() == sunset.getHours()-1) {
+					brightness = 0.6;
+				} else {
+					brightness = 0.3;
+				}
+			}
+		})
+	}
+	
 	function updateWeather() {
 		airTemperature = weatherService.getAirTemperature();
 		waterTemperature = weatherService.getWaterTemperature();
 		weatherState = weatherService.getWeatherState();
 		windSpeed = weatherService.getWindSpeed();
-		console.log("Updated weather data")
 	}
 
 	function runNewAnimation() {
@@ -56,6 +82,8 @@
 		//Set new animation and set a new one every set amount of time
 		runNewAnimation()
 		setInterval(runNewAnimation, animationCycleTimeMinutes*60*1000)
+
+		setBrightnessToDaylight(latitude, longitude)
 	})
 
 </script>
@@ -64,7 +92,7 @@
 		<source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 	</video>
 	<div class="weatherVideoContainer">
-		<video autoplay muted loop class="backgroundWeather">
+	<video autoplay muted loop class="backgroundWeather" style="filter: blur(4px) brightness({brightness})">
 			<source src={ `./assets/weather/${weatherState}.mp4`} type="video/mp4">
 		</video>
 		<div class="weatherInformationContainer">
@@ -112,7 +140,6 @@
 		object-fit: cover;
 		position: absolute;
 		z-index: -1;
-		filter: blur(4px);
 	}
 
 	.weatherInformationContainer {

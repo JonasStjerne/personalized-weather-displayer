@@ -12,7 +12,7 @@ export default class WeatherService {
       }
 
       getWeatherState() {
-            return "partlyCloudy";
+            return "partCloudy";
       }
 
       getWindSpeed() {
