@@ -15,7 +15,7 @@
 	const longitude = 10.24266992;
 	let brightness;
 
-	let airTemperature, waterTemperature, weatherState, windSpeed, currentAnimation;
+	let airTemperature, waterTemperature, weatherState, windSpeed, currentDate, currentAnimation;
 
 	//Set the brighness of the video according to daylight outside
 	//Thanks to https://sunrise-sunset.org/api for using the API
@@ -44,6 +44,9 @@
 		waterTemperature = weatherService.getWaterTemperature();
 		weatherState = weatherService.getWeatherState();
 		windSpeed = weatherService.getWindSpeed();
+
+		const date = new Date();
+		currentDate = date.getDate() +'/'+ (date.getMonth()+1);
 	}
 
 	function runNewAnimation() {
@@ -52,7 +55,7 @@
 		var pickedAnimation;
 		
 		//Get animations with conditions that match weatherData
-		let animationContainer = getFilteredAnimations(animations, { airTemperature, waterTemperature,weatherState, windSpeed });
+		let animationContainer = getFilteredAnimations(animations, { airTemperature, waterTemperature,weatherState, windSpeed, currentDate });
 
 		function pickRandomAnimation() {
 			//If no animations condition are met, play default animation
