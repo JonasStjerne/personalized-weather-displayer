@@ -57,9 +57,11 @@ Example:
 ## Run the application
 First dowload the repository.
 
+### Run on a server
 To run the application on a server upload the contens of the `public` directory to the server.
 
-Or run it locally by CD'ing into the root directory of the application and run:
+### Run locally
+Run it locally by CD'ing into the root directory of the application and run:
 ```code
 npm i
 npm run start
