@@ -1,20 +1,11 @@
 [
       {
-         "src":"rainyoutfit1",
+         "src":"happy.gif",
          "conditions": {
-               "waterTemperature":{
+               "airTemperature":{
                   "min":10,
                   "max":25
                }
-            }
-      },
-      {
-         "src":"jonasBadeklarMenOverskyet",
-         "conditions":{
-               "waterTemperature":{
-                  "min":10
-               },
-               "weatherState":"cloudy" 
             }
       }
    ]
