@@ -1,6 +1,5 @@
 /node_modules/
 /public/build/
-/public/assets/weather/
 /public/assets/animations/
 
 .DS_Store
