@@ -1,7 +1,7 @@
 # Personalized Weather displayer
 Web-based weather data displayer where you can insert animations/pictures of yourself. The animations of yourself can contain conditions for certain weather criteria to be present when shown.
 
-![Gif of weather applikation](https://github.com/JonasStjerne/personalized-weather-displayer/blob/main/demonstration.gif)
+![Gif of weather applikation](https://github.com/JonasStjerne/personalized-weather-displayer/blob/main/displayer.gif)
 
 Record a video or take a picture of yourself in rain clothes to be shown when it's raining or you in winter clothes when temerature hits below 5 degress.
 
