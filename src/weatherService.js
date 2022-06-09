@@ -3,19 +3,21 @@ export default class WeatherService {
             this.location = location;
       }
 
-      getAirTemperature() {
+      async getAirTemperature() {
+            // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+            // const airTemperature = await response.json();
             return 20;
       }
 
-      getWaterTemperature() {
+      async getWaterTemperature() {
             return 14;
       }
 
-      getWeatherState() {
+      async getWeatherState() {
             return "partCloudy";
       }
 
-      getWindSpeed() {
+      async getWindSpeed() {
             return 2;
       }
 

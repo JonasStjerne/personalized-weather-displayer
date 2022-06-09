@@ -4,23 +4,22 @@
 	import getFilteredAnimations from './getAnimations';
 	import * as animations from '../public/assets/animations/list.json';
 
-	const weatherService = new WeatherService("Hou");
+	const weatherService = new WeatherService("Location");
 
 	const updateWeatherDataIntervalMinutes = 0.1;
 	const animationCycleTimeMinutes = 5;
 
 	const defaultAnimation = 'defaultAnimation.mp4';
 
-	const latitude = 55.92028279;
-	const longitude = 10.24266992;
-	let brightness;
+	const latitude = 57.046707;
+	const longitude = 9.935932;
 
-	let airTemperature, waterTemperature, weatherState, windSpeed, currentDate, currentAnimation;
+	let airTemperature, waterTemperature, weatherState, windSpeed, currentDate, currentAnimation, brightness;
 
 	//Set the brighness of the video according to daylight outside
 	//Thanks to https://sunrise-sunset.org/api for using the API
-	function setBrightnessToDaylight(lat, lng) {
-		fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today&formatted=0`)
+	async function updateBrightnessToSunlight(lat, lng) {
+		return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today&formatted=0`)
 		.then(response => response.json())
 		.then(data => {
 			if(data.status == "OK") {
@@ -39,14 +38,15 @@
 		})
 	}
 	
-	function updateWeather() {
-		airTemperature = weatherService.getAirTemperature();
-		waterTemperature = weatherService.getWaterTemperature();
-		weatherState = weatherService.getWeatherState();
-		windSpeed = weatherService.getWindSpeed();
+	async function updateWeather() {
+		airTemperature =  await weatherService.getAirTemperature();
+		waterTemperature = await weatherService.getWaterTemperature();
+		weatherState = await weatherService.getWeatherState();
+		windSpeed = await weatherService.getWindSpeed();
 
 		const date = new Date();
 		currentDate = date.getDate() +'/'+ (date.getMonth()+1);
+		return;
 	}
 
 	function runNewAnimation() {
@@ -78,50 +78,57 @@
 	}
 
 	onMount(() => {
-		//Get weather information and update every set amount of time
-		updateWeather()
-		setInterval(updateWeather, updateWeatherDataIntervalMinutes*60*1000)
+		async function start() {
+			//Get weather information and update every set amount of time
+			await updateWeather()
+			setInterval(updateWeather, updateWeatherDataIntervalMinutes*60*1000)
 
-		//Set new animation and set a new one every set amount of time
-		runNewAnimation()
-		setInterval(runNewAnimation, animationCycleTimeMinutes*60*1000)
+			//Set new animation and set a new one every set amount of time
+			runNewAnimation()
+			setInterval(runNewAnimation, animationCycleTimeMinutes*60*1000)
 
-		setBrightnessToDaylight(latitude, longitude)
+			updateBrightnessToSunlight(latitude, longitude)
+		};
+		
+		start()
+
 	})
 
 </script>
 <div class="wrapper">
-	<img src="{ `./assets/animations/${currentAnimation}` }" alt="" class="idiot">
+	{#if currentAnimation}
+		<img src="{ `./assets/animations/${currentAnimation}` }" alt="" class="idiot">
+	{/if}
 	<!-- <video autoplay muted loop class="idiot">
 		<source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
 	</video> -->
 	<div class="weatherVideoContainer">
-		<video autoplay muted loop class="backgroundWeather" style="filter: blur(4px) brightness({brightness})">
-			<source src={ `./assets/weather/${weatherState}.mp4`} type="video/mp4">
-		</video>
-		<div class="weatherInformationContainer">
-			<div class="airTemperature">
-			<h1>{ airTemperature }°</h1>
-			</div>
-			<div class="secondaryWeatherInfo">
-				<div class="windSpeedContainer">
-					<img src="./assets/windIcon.png" alt="">
-					<h2>{ windSpeed }m/s</h2>
+		{#if weatherState}
+			<video autoplay muted loop class="backgroundWeather" style="filter: blur(4px) brightness({brightness})">
+				<source src={ `./assets/weather/${weatherState}.mp4`} type="video/mp4">
+			</video>
+		{/if}
+		{#if airTemperature && windSpeed && waterTemperature}
+			<div class="weatherInformationContainer">
+				<div class="airTemperature">
+				<h1>{ airTemperature }°</h1>
 				</div>
-				<div class="waterTemperature">
-					<img src="./assets/waterIcon.png" alt="">
-				<h2>{ waterTemperature }°</h2>
+				<div class="secondaryWeatherInfo">
+					<div class="windSpeedContainer">
+						<img src="./assets/windIcon.png" alt="">
+						<h2>{ windSpeed }m/s</h2>
+					</div>
+					<div class="waterTemperature">
+						<img src="./assets/waterIcon.png" alt="">
+					<h2>{ waterTemperature }°</h2>
+					</div>
 				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
 
 <style>
-	.wrapper {
-		height: 100vh;
-	}
-
 	.idiot {
 		position: fixed;
 		bottom: 0;
