@@ -4,7 +4,9 @@ DMI made the website for their public API documentation private ([geniuses](http
 
 ---
 
-Web-based weather data displayer where you can insert animations/pictures of yourself. The animations of yourself can contain conditions for certain weather criteria to be present when shown.
+Web-based weather data displayer where you can insert animations/pictures of yourself. The animations of yourself can contain conditions for certain weather criteria to be present when shown. 
+
+The app will use DMI's Frie Data API and therefore only support Danish addresses (Could be improved in the future)
 
 ![Gif of weather applikation](https://github.com/JonasStjerne/personalized-weather-displayer/blob/main/displayer.gif)
 
