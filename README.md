@@ -1,4 +1,9 @@
 # Personalized Weather displayer
+## ⚠️ Not connected to DMI's API yet
+DMI made the website for their public API documentation private ([geniuses](https://confluence.govcloud.dk/display/FDAPI)). The code will be hooked up to the API as soon as I get my hands on the documentation & API key.
+
+---
+
 Web-based weather data displayer where you can insert animations/pictures of yourself. The animations of yourself can contain conditions for certain weather criteria to be present when shown.
 
 ![Gif of weather applikation](https://github.com/JonasStjerne/personalized-weather-displayer/blob/main/displayer.gif)

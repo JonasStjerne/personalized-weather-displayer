@@ -7,7 +7,7 @@ export default function getFilteredAnimations(animationList, weatherData) {
             let conditionsMet = true;
             //Check if all its conditions are met
             Object.keys(animation.conditions).forEach(key => {
-                  //If animation condition isn't passed passed in the weatherData log error
+                  //If animation condition isn't passed in the weatherData log error
                   if(!weatherData[key]) { console.error("Animation condition error: No condition called ", key); return}
                   const condition = animation.conditions[key];
 
