@@ -61,10 +61,5 @@ First dowload the repository.
 To run the application on a server upload the contens of the `public` directory to the server.
 
 ### Run locally
-Run it locally by CD'ing into the root directory of the application and run:
-```code
-npm i
-npm run start
-```
-The application will now run on http://localhost:8080/
+Run it locally by opening the file `public/index.html` with a browser
 
