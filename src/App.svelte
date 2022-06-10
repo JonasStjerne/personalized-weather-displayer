@@ -4,12 +4,12 @@
 	import getFilteredAnimations from './getAnimations';
 	import * as animations from '../public/assets/animations/list.json';
 
-	const weatherService = new WeatherService("Location");
+	const weatherService = new WeatherService();
 
-	const updateWeatherDataIntervalMinutes = 0.1;
-	const animationCycleTimeMinutes = 5;
+	const updateWeatherDataIntervalMinutes = 10;
+	const animationCycleTimeMinutes = 0.5;
 
-	const defaultAnimation = 'defaultAnimation.mp4';
+	const defaultAnimation = 'defaultAnimation.gif';
 
 	const latitude = 57.046707;
 	const longitude = 9.935932;
@@ -91,7 +91,6 @@
 		};
 		
 		start()
-
 	})
 
 </script>
