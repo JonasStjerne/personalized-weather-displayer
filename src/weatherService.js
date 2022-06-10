@@ -15,6 +15,17 @@ export default class WeatherService {
             return endpoint;
       }
 
+      getCloudCover() {
+            const cloudCoverResponseJSON = await fetch(this.getMetObsEndpoint("cloud_cover"));
+            const cloudCoverResponse = await cloudCoverResponseJSON.json();
+            const cloudCover = cloudCoverResponse.features[0].properties.value;
+
+            if (cloudCover <= 25) { return "sunny" }
+            if (cloudCover >= 26 && cloudCover <= 75) { return "partCloudy" }
+            if (cloudCover >= 76) { return  "cloudy" }
+      }
+
+
       async getAirTemperature() {
             const responseJSON = await fetch(this.getMetObsEndpoint("temp_mean_past1h"));
             const response = await responseJSON.json();
@@ -30,13 +41,11 @@ export default class WeatherService {
             const response = await responseJSON.json();
             const weather = response.features[0].properties.value;
             
-            if (weather <= 149) { return "sunny" }
+            if (weather <= 149) { return getCloudCover() }
             if (weather >= 150 && weather <= 169) { return "rainy" }
             if (weather >= 170 && weather <= 179) { return "snowy" }
             if (weather >= 180 && weather <= 194) { return "rainy" }
             if (weather >= 195 && weather <= 199) { return "lightning" }
-           
-
       }
 
       async getWindSpeed() {
