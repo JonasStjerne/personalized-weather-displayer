@@ -27,7 +27,7 @@ export default class WeatherService {
 
 
       async getAirTemperature() {
-            const responseJSON = await fetch(this.getMetObsEndpoint("temp_mean_past1h"));
+            const responseJSON = await fetch(this.getMetObsEndpoint("temp_dry"));
             const response = await responseJSON.json();
             return Math.round(response.features[0].properties.value);
       }
@@ -52,7 +52,7 @@ export default class WeatherService {
       }
 
       async getWindSpeed() {
-            const responseJSON = await fetch(this.getMetObsEndpoint("wind_speed_past1h"));
+            const responseJSON = await fetch(this.getMetObsEndpoint("wind_speed"));
             const response = await responseJSON.json();
             return Math.round(response.features[0].properties.value);
       }
