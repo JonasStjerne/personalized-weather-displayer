@@ -170,6 +170,7 @@
 
 	.secondaryWeatherInfo > * {
 		display: flex;
+		align-items: center;
 	}
 
 	.secondaryWeatherInfo img {
