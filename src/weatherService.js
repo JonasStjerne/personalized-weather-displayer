@@ -52,7 +52,7 @@ export default class WeatherService {
       }
 
       async getWindSpeed() {
-            const responseJSON = await fetch(this.getMetObsEndpoint("wind_speed"));
+            const responseJSON = await fetch(this.getMetObsEndpoint("wind_max"));
             const response = await responseJSON.json();
             return Math.round(response.features[0].properties.value);
       }
