@@ -7,9 +7,9 @@
 	const weatherService = new WeatherService();
 
 	const updateWeatherDataIntervalMinutes = 10;
-	const animationCycleTimeMinutes = 0.5;
+	const animationCycleTimeMinutes = 1;
 
-	const defaultAnimation = 'defaultAnimation.gif';
+	const defaultAnimation = '14.png';
 
 	const latitude = 57.046707;
 	const longitude = 9.935932;
@@ -133,6 +133,7 @@
 		bottom: 0;
 		left: 0;
 		width: 40vw;
+		object-fit: contain;
 		max-height: 100vh;
 		z-index: 1;
 	}
