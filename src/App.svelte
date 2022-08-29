@@ -135,6 +135,7 @@
 		width: 40vw;
 		object-fit: contain;
 		max-height: 100vh;
+		object-fit: contain;
 		z-index: 1;
 	}
 
