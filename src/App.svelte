@@ -82,12 +82,14 @@
 			//Get weather information and update every set amount of time
 			await updateWeather()
 			setInterval(updateWeather, updateWeatherDataIntervalMinutes*60*1000)
+			
+			updateBrightnessToSunlight(latitude, longitude)
+			setInterval(updateBrightnessToSunlight(latitude, longitude), updateWeatherDataIntervalMinutes*60*1000)
 
 			//Set new animation and set a new one every set amount of time
 			runNewAnimation()
 			setInterval(runNewAnimation, animationCycleTimeMinutes*60*1000)
 
-			updateBrightnessToSunlight(latitude, longitude)
 		};
 		
 		start()
