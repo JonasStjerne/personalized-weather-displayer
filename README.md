@@ -6,27 +6,25 @@ The app will use DMI's Frie Data API and therefore only support Danish addresses
 
 ![Gif of weather applikation](https://github.com/JonasStjerne/personalized-weather-displayer/blob/main/displayer.gif)
 
-Record a video or take a picture of yourself in rain clothes to be shown when it's raining or you in winter clothes when temerature hits below 5 degress.
+Record a video or take a picture of yourself in rain clothes to be shown when it's raining or you in winter clothes when the temperature hits below 5 degrees.
 
-The videos have to be converted to GIF to support transparent background. 
+The videos have to be converted to GIFs to support transparent backgrounds. 
 
 ## Configure animations
-To display your custom animations upload them in .gif or a image format to the folder:
+To display your custom animations upload them in .gif or an image format to the folder:
 
 `public/assets/animations`
 
-In the file `list.json` add the animation/picture file name and the conditions for it to be displayed.
+In the file `list.json` add the animation/picture file name and the conditions for displaying it.
 The default weather data contains the following data points that can be used for conditions:
 
-```
-airTemperature: number
-waterTemperature: number
-windSpeed: number
+```typescript
+airTemperature: {min?: number, max?: number}
+waterTemperature: {min?: number, max?: number}
+windSpeed: {min?: number, max?: number}
 weatherState: "sunny" | "partCloudy" | "rainy" | "snowy" | "lightning"
 currentDate: Date (format Day/Month ex. 12/3)
 ```
-
-The data points with type of number can hold a min and or max condition for the number and the data point with type of string/date will be checked if equal to the set value. 
 
 Example:
 
@@ -45,16 +43,15 @@ Example:
                    "max": 30
                }
             }
-      },
-      ...
+      }
 ]
 ```
 
 ## Run the application
-First dowload the repository.
+First, download the repository.
 
 ### Run on a server
-To run the application on a server upload the contens of the `public` directory to the server.
+To run the application on a server upload the contents of the `public` directory to the server.
 
 ### Run locally
 Run it locally by opening the file `public/index.html` with a browser
